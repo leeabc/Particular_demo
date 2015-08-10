@@ -1,0 +1,30 @@
+<html>
+<body>
+	<canvas id="example" width="500" height="500"></canvas>
+</body>
+
+<script>
+	var canvas = document.getElementById("example");
+	var contex = canvas.getContext("2d");
+	var x = 10;
+	var y = 250;
+	var speed = 1;
+
+	var draw = function(){
+		x += speed;  //add speed;
+
+		// clear canvas
+		contex.clearRect(0, 0, canvas.width, canvas.height);
+
+		contex.beginPath();
+		contex.fillStyle = "black";
+		contex.arc(x, y, 5, 0, Math.PI*2, true);
+		contex.closePath();
+		contex.fill();
+	}
+
+	setInterval(draw,16); //60fps
+
+</script>
+
+</html>
