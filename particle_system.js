@@ -1,9 +1,16 @@
 ParticleSystem = function(){
-	var particleArr = [];
+	particleArr = [];
 	this.gravity = new Vector(0, 100);
+	var limit = 0;
+
+	this.setLimit = function(num){
+		limit = num;
+	};
 
 	this.addParticle = function(particle){
-		particleArr.push(particle);
+		if(limit <= 0 || particleArr.length < limit){
+			particleArr.push(particle);
+		}
 	};
 
 	this.removeParticle = function(dt){
@@ -37,8 +44,8 @@ ParticleSystem = function(){
 		if(!imageObj){
 			particleArr.forEach(function(obj){
 				contex.beginPath();
-				contex.fillStyle = "black";
-				contex.arc(obj.position.x, obj.position.y, 5, 0, Math.PI*2, true);
+				contex.fillStyle = obj.color;
+				contex.arc(obj.position.x, obj.position.y, obj.size, 0, Math.PI*2, true);
 				contex.closePath();
 				contex.fill();
 			});
@@ -51,13 +58,35 @@ ParticleSystem = function(){
 
 	this.collision = function(x1, y1, x2, y2){
 		particleArr = particleArr.map(function(obj){
-			if(obj.position.x < x1 || obj.position.x > x2){
+			if(obj.position.x - obj.size < x1 || obj.position.x + obj.size > x2){
 				obj.velocity.x = -obj.velocity.x;
 			}
-			if(obj.position.y < y1 || obj.position.y > y2){
+			if(obj.position.y - obj.size < y1 || obj.position.y + obj.size > y2){
 				obj.velocity.y = -obj.velocity.y;
 			}
 			return obj;
 		});
 	};
+
+
+	this.fadeOutByAge = function(){
+		particleArr = particleArr.map(function(obj){
+			var alpha = 1 - (obj.age / obj.life);
+			//console.log(alpha);
+			obj.color = obj.color.replace(/[-+]?[0-9]*\.?[0-9]*\)/, alpha + ")");
+			return obj;
+		});
+	};
+
+	//for wave
+	this.applyWave = function(timer, waveLevel){
+		particleArr = particleArr.map(function(obj, index){
+			var theta = index + timer;
+			var frequency = 50;
+
+			obj.position.x = index + obj.age;
+			obj.position.y = Math.sin((theta/frequency))*waveLevel + 150;
+			return obj;
+		});
+	}
 };

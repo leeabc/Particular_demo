@@ -20,7 +20,7 @@
 		var position = new Vector(150,150);
 		var velocity = new Vector(Math.cos(theta), Math.sin(theta)).multiply(200);
 		var gravity = new Vector(0,300);
-		var life = 1;
+		var life = 2;
 		var color = "rgba(0,0,0,1)";
 		var size = 5;
 
@@ -29,8 +29,10 @@
 
 		ps.addParticle(new Particle(position, velocity, gravity, life, color, size));
 		ps.removeParticle(dt);
-		ps.collision(0, 0, 500, 500);
+		ps.collision(0,0, 500, 500);
 		ps.calPosition(dt);
+
+		ps.fadeOutByAge();
 		ps.render(contex);
 
 		requestAnimationFrame(draw);

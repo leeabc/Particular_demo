@@ -21,11 +21,13 @@
 		var velocity = new Vector(Math.cos(theta), Math.sin(theta)).multiply(200);
 		var gravity = new Vector(0,500);
 		var life = 1;
+		var color = "rgba(0,0,0,1)";
+		var size = 5;
 
 		//clear canvas
 		contex.clearRect(0, 0, canvas.width, canvas.height);
 
-		ps.addParticle(new Particle(position, velocity, gravity, life));
+		ps.addParticle(new Particle(position, velocity, gravity, life, color, size));
 		ps.removeParticle(dt);
 		ps.calPosition(dt);
 		ps.render(contex);
