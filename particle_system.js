@@ -33,13 +33,31 @@ ParticleSystem = function(){
 		});
 	};
 
-	this.render = function(contex){
-		particleArr.forEach(function(obj){
-			contex.beginPath();
-			contex.fillStyle = "black";
-			contex.arc(obj.position.x, obj.position.y, 5, 0, Math.PI*2, true);
-			contex.closePath();
-			contex.fill();
+	this.render = function(contex, imageObj){
+		if(!imageObj){
+			particleArr.forEach(function(obj){
+				contex.beginPath();
+				contex.fillStyle = "black";
+				contex.arc(obj.position.x, obj.position.y, 5, 0, Math.PI*2, true);
+				contex.closePath();
+				contex.fill();
+			});
+		}else{
+			particleArr.forEach(function(obj){
+				contex.drawImage(imageObj, obj.position.x, obj.position.y ,160 , 120)
+			});
+		}
+	};
+
+	this.collision = function(x1, y1, x2, y2){
+		particleArr = particleArr.map(function(obj){
+			if(obj.position.x < x1 || obj.position.x > x2){
+				obj.velocity.x = -obj.velocity.x;
+			}
+			if(obj.position.y < y1 || obj.position.y > y2){
+				obj.velocity.y = -obj.velocity.y;
+			}
+			return obj;
 		});
 	};
 };

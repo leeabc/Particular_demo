@@ -1,0 +1,47 @@
+<html>
+<head>
+	<script src="./vector.js"></script>
+	<script src="./particle.js"></script>
+	<script src="./particle_system.js"></script>
+</head>
+<body>
+	<canvas id="example" width="1000" height="1000"></canvas>
+</body>
+
+<script>
+	var canvas = document.getElementById("example");
+	var contex = canvas.getContext("2d");
+
+	var ps = new ParticleSystem();
+	var dt = 0.01;
+
+    var imageObj = new Image();
+
+	var draw = function(){
+		var theta = Math.random() * Math.PI * 0.75; //360
+		var position = new Vector(0,150);
+		var velocity = new Vector(Math.cos(theta), Math.sin(theta)).multiply(500);
+		var gravity = new Vector(0,300);
+		var life = 3;
+
+		//clear canvas
+		contex.clearRect(0, 0, canvas.width, canvas.height);
+
+		ps.addParticle(new Particle(position, velocity, gravity, life));
+		ps.removeParticle(dt);
+		ps.collision(0,0, 1200, 800);
+		ps.calPosition(dt);
+		ps.render(contex, imageObj);
+
+		requestAnimationFrame(draw);
+	};
+
+    imageObj.onload = function() {
+    	draw();
+    };
+
+    imageObj.src = "./bubble.png";
+
+</script>
+
+</html>
