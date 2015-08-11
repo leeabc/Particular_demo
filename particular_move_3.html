@@ -3,16 +3,18 @@
 	<script src="./vector.js"></script>
 </head>
 <body>
-	<canvas id="example" width="500" height="500"></canvas>
+	<canvas id="example" width="1000" height="1000"></canvas>
 </body>
 
 <script>
 	var canvas = document.getElementById("example");
 	var contex = canvas.getContext("2d");
 
-	var position = new Vector(10, 250);
+	var position = new Vector(250, 250);
 	var velocity = new Vector(50, -50);
-	var acceleration = new Vector(0, 10);
+
+	var acceleration = new Vector(0, 100);
+	var gravity = new Vector(0, 100);
 	var dt = 0.06; //Euler method...
 
 	var draw = function(){
@@ -20,7 +22,7 @@
 		velocity = velocity.add(acceleration.multiply(dt));
 
 		// Clear canvas
-		contex.clearRect(0, 0, canvas.width, canvas.height);
+		//contex.clearRect(0, 0, canvas.width, canvas.height);
 
 		contex.beginPath();
 		contex.fillStyle = "black";
@@ -30,7 +32,7 @@
 
 		requestAnimationFrame(draw);
 	}
-	
+
 	draw();
 </script>
 
