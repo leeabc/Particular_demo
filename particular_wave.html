@@ -44,8 +44,9 @@
 
 		ps.addParticle(new Particle(position, velocity, gravity, life, color, size));
 		ps.removeParticle(dt);
-		ps.applyWave(timer, 10);
+		ps.applyWave(timer, 50);
 		ps.render(contex);
+		ps.renderWave(contex, 5, color, canvas.height);
 
 		requestAnimationFrame(draw);
 	};

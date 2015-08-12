@@ -81,7 +81,7 @@ ParticleSystem = function(){
 	//for wave
 	this.applyWave = function(timer, waveLevel){
 		particleArr = particleArr.map(function(obj, index){
-			var theta = index + timer;
+			var theta = index/3 + timer;
 			var frequency = 50;
 
 			obj.position.x = index + obj.age;
@@ -89,4 +89,15 @@ ParticleSystem = function(){
 			return obj;
 		});
 	}
+
+	this.renderWave = function(contex, size, color, canvasHeight){
+		particleArr.forEach(function(obj){
+			var gradient=contex.createLinearGradient(obj.position.x ,obj.position.y, obj.position.x, 500);			
+			gradient.addColorStop(0, color);
+			gradient.addColorStop(1, "white");
+
+			contex.fillStyle = gradient;
+			contex.fillRect(obj.position.x, obj.position.y, size, 500);
+		});
+	};
 };
