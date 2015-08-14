@@ -1,0 +1,42 @@
+<html>
+<body>
+	<canvas id="example" width="500" height="500"></canvas>
+</body>
+
+<script>
+	var canvas = document.getElementById("example");
+	var contex = canvas.getContext("2d");
+	var x = 0;
+	var y = 250;
+	var speed = 5;
+	var waves = 1;
+	var level = 30;
+	var waveDistance = Math.round(canvas.width / waves);
+	var startPosition = {x:x-waveDistance*2, y:y};
+
+	var draw = function(){
+		var times = 0;
+		var startX = 0;
+		contex.clearRect(0, 0, canvas.width, canvas.height);
+
+		while(startX < canvas.width + waveDistance){
+			startX = startPosition.x + times * waveDistance;
+			contex.beginPath();
+			contex.moveTo(startX, y);
+
+			contex.quadraticCurveTo(startX + waveDistance/2, times%2==1?level+y:-level+y, startX + waveDistance, y);
+			contex.stroke();
+			times++;
+		}
+
+		startPosition.x += speed;
+		if(startPosition.x >= 0){
+			startPosition.x -= waveDistance*2;
+		}
+		requestAnimationFrame(draw);
+	};
+
+	draw();
+</script>
+
+</html>
